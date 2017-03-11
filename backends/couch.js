@@ -1,6 +1,6 @@
 
 
-var nano = require('nano');
+var Cloudant = require('cloudant');
 
 var flush_stats = function (timestamp, metrics) {
 
@@ -222,10 +222,6 @@ exports.init = function(startupTime, config, events) {
 	    return false;
   }
   console.log('using: ' + id_generator + ' for id generation');
-
-  var couchprotocol = config.couchprotocol || 'http';
-  var couchhost = config.couchhost || 'localhost';
-  var couchport = config.couchport || '5984';
   
   if (typeof config.couchdb !== 'string') {
     console.log('config.couchdb is not set, config.couchdb must be set.');
@@ -233,7 +229,7 @@ exports.init = function(startupTime, config, events) {
   }
   couchdb = config.couchdb;
 
-  nano = nano(couchprotocol + '://' + couchhost + ':' + couchport);
+  nano = Cloudant({account:config.cloudant_user, password:config.cloudant_pass});
 
   if(config.bulk_size == 0) {
           bulk_size = 0;
