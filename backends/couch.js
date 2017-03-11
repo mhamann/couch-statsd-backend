@@ -223,6 +223,7 @@ exports.init = function(startupTime, config, events) {
   }
   console.log('using: ' + id_generator + ' for id generation');
 
+  var couchprotocol = config.couchprotocol || 'http';
   var couchhost = config.couchhost || 'localhost';
   var couchport = config.couchport || '5984';
   
@@ -232,7 +233,7 @@ exports.init = function(startupTime, config, events) {
   }
   couchdb = config.couchdb;
 
-  nano = nano('http://' + couchhost + ':' + couchport);
+  nano = nano(couchprotocol + '://' + couchhost + ':' + couchport);
 
   if(config.bulk_size == 0) {
           bulk_size = 0;
